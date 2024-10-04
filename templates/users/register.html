@@ -10,8 +10,8 @@
     <main class="form-signin w-100 m-auto text-center">
         <form method="post">
             {% csrf_token %}
-        <img class="mb-4" src="https://www.clipartmax.com/png/middle/245-2454560_how-easy-is-the-video-robot-to-use-video-robot-logo.png" alt="" width="72" height="57">
-        <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+            <img class="mb-4" src="{% static 'images/B1.png' %}" alt="Company Logo" width="300" height="100">
+        <h1 class="h3 mb-3 fw-normal">REGISTER</h1>
     
         <div class="form-floating">
             {{form.username}}
@@ -26,10 +26,11 @@
             {{form.password2}}
             <label for="floatingPassword">Confirm Password</label>
         </div>
-        <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">Sign up</button>
+        <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">Register</button>
         <p class="mt-5 mb-3 text-muted">Already have an account? <a href="{% url 'login' %}">Log in</a> </p>
 
-        <p class="mt-5 mb-3 text-muted">&copy; 2023</p>
+        <p class="mt-5 mb-3 text-muted">&copy; {{ current_year }} <a href="https://b1properties.ae/" target="_blank" class="text-primary">B1
+            PROPERTIES</a>. All rights reserved.</p>
         </form>
     </main>
 

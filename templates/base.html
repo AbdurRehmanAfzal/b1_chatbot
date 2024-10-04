@@ -20,12 +20,50 @@
             font-family: 'Inter', sans-serif;
         }
 
-        .form-signin input[type="password"] {
-            margin-bottom: 0px;
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
+        /* Style to round form fields, add shadow, and highlight border */
+        .form-signin input[type="text"],
+        .form-signin input[type="password"],
+        .form-signin input[type="email"],
+        .form-signin textarea,
+        .form-signin select {
+            border-radius: 50px;
+            padding: 10px 20px;
+            border: 2px solid #FFA17F;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
+        /* Highlight border and shadow when the field is focused */
+        .form-signin input[type="text"]:focus,
+        .form-signin input[type="password"]:focus,
+        .form-signin input[type="email"]:focus,
+        .form-signin textarea:focus,
+        .form-signin select:focus {
+            border-color: #00223E;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            outline: none;
+        }
+
+        /* Button styling: rounded, shadow, and hover effect */
+        .form-signin button {
+            border-radius: 50px;
+            padding: 12px 20px;
+            background-color: #FFA17F;
+            border: none;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-signin button:hover {
+            background-color: #FF6A3D;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Styling for history container */
         .history-container {
             max-height: 500px;
             /* Set a maximum height for the container */
@@ -35,19 +73,24 @@
     </style>
 </head>
 
-<body style="overflow-y: hidden; background-color:#FFFFFF;">
+<body style="overflow-y: hidden; 
+    background: #FFA17F;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #00223E, #FFA17F);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #00223E, #FFA17F); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
+
     {% if messages %}
     <ul class="position-fixed list-unstyled" style="right:1rem; top:1rem;">
-    {% for message in messages %}
-    <li class="alert alert-{{message.tags}}" role="alert">
-        {{message}}
-    </li>
-    {% endfor %}
+        {% for message in messages %}
+        <li class="alert alert-{{message.tags}}" role="alert">
+            {{message}}
+        </li>
+        {% endfor %}
     </ul>
     {% endif %}
+    
     {% block content %}
-
     {% endblock content %}
+    
 </body>
 
 </html>

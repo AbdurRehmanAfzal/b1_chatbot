@@ -15,3 +15,12 @@ class ChatGptBot(models.Model):
         verbose_name = 'Messages History'
         verbose_name_plural = 'Messages History'
         ordering = ['created_at']
+
+# class ChatAnalytics(models.Model):
+#     query_type = models.CharField(max_length=50)  # market_insight, price, etc.
+#     response_time = models.FloatField()
+#     user_satisfaction = models.IntegerField(null=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
+    
+#     class Meta:
+#         verbose_name = 'Chat Analytics'

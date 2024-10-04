@@ -16,14 +16,15 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib import messages
+from .rag import RAG_CLS
+
+b1_model = RAG_CLS('dubai_property.txt')
 
 
-
-
-client = OpenAI(
-    # This is the default and can be omitted
-    api_key=os.getenv("OPENAI_API_KEY"),
-)
+# client = OpenAI(
+#     # This is the default and can be omitted
+#     api_key=os.getenv("OPENAI_API_KEY"),
+# )
 
 
 
@@ -40,16 +41,11 @@ class HomeView(LoginRequiredMixin, ListView):
         user_input = request.POST.get('userInput')
         clean_user_input = str(user_input).strip()
         try:
-            response = client.chat.completions.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {
-                        "role": "user",
-                        "content": clean_user_input,
-                    }
-                ],
-            )
-            bot_response = response.choices[0].message.content
+            response = b1_model.get_answer(clean_user_input)
+
+            # Make sure bot_response is in a serializable form (string)
+            bot_response = str(response)  # Ensure it's a string, not an object like AIMessage
+            
             obj, created = ChatGptBot.objects.get_or_create(
                 user=request.user,
                 messageInput=clean_user_input,
@@ -59,7 +55,7 @@ class HomeView(LoginRequiredMixin, ListView):
             messages.warning(request, f"Failed to connect to OpenAI API, check your internet connection")
         except openai.RateLimitError as e:
             messages.warning(request, f"You exceeded your current quota, please check your plan and billing details.")
-            messages.warning(request, f"If you are a developper change the API Key")
+            messages.warning(request, f"If you are a developer, change the API Key")
 
         return redirect(request.META['HTTP_REFERER'])
 
@@ -98,7 +94,7 @@ class LoginView(FormView):
         # Authenticate the user and log him/her in
         user = authenticate(username=username, password=password)
         login(self.request, user)
-        messages.success(self.request, "You are logged in")
+        messages.success(self.request, "You are logged in B1 properties Real State Chatbot")
         return response
     def form_invalid(self, form):
         for field, errors in form.errors.items():
@@ -121,4 +117,4 @@ def DeleteHistory(request):
 def logout_view(request):
     logout(request)
     messages.success(request, "Succesfully logged out")
-    return redirect("main")
+    return redirect("login")
